@@ -11,6 +11,7 @@ const useSearchBar = () => {
   }, [query]);
 
   return {
+    query,
     setQuery
   };
 };
