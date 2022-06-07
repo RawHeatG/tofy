@@ -27,7 +27,17 @@ function App() {
         <ThemeToggleButton onClick={() => dispatch(toggleTheme())}>
           {theme}
         </ThemeToggleButton>
-        {status === "fulfilled" ? <GifGrid gifs={gifs} /> : <h1>Loading...</h1>}
+        {status === "fulfilled" ? (
+          gifs?.length === 0 ? (
+            <h1>No videos found :(</h1>
+          ) : (
+            <GifGrid gifs={gifs} />
+          )
+        ) : status === "loading" ? (
+          <h1>Loading...</h1>
+        ) : (
+          <h1>Error Occured :(</h1>
+        )}
       </StyledApp>
     </ThemeProvider>
   );
