@@ -1,9 +1,15 @@
 const lightTheme = {
-  background: "#ffffff"
+  background: "#fdfcdc",
+  color: "#041C32",
+  invertedBackground: "#041C32",
+  invertedColor: "#fdfcdc"
 };
 
 const darkTheme = {
-  background: "#000000"
+  background: "#041C32",
+  color: "#fdfcdc",
+  invertedBackground: "#fdfcdc",
+  invertedColor: "#041C32"
 };
 
 export const themes = {
