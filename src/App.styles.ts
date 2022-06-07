@@ -4,8 +4,6 @@ export const StyledApp = styled.div`
   background-color: ${(props) => props.theme.background};
   color: ${(props) => props.theme.color};
   transition: all 0.3s ease;
-  min-width: 100vw;
-  min-height: 100vh;
 `;
 
 export const ThemeToggleButton = styled.button`
