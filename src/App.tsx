@@ -6,6 +6,7 @@ import { toggleTheme } from "./features/theme/themeSlice";
 import { useEffect } from "react";
 import { GifGrid } from "./components/gif-grid/gif-grid";
 import { getTrendingGifs } from "./features/gif/gifSlice";
+import { SearchBar } from "./components/search-bar/search-bar";
 
 function App() {
   const theme = useAppSelector((state) => state.theme.value);
@@ -22,6 +23,7 @@ function App() {
   return (
     <ThemeProvider theme={themes[theme]}>
       <StyledApp>
+        <SearchBar />
         <ThemeToggleButton onClick={() => dispatch(toggleTheme())}>
           {theme}
         </ThemeToggleButton>
