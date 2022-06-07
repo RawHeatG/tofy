@@ -9,6 +9,6 @@ export const StyledGrid = styled.div`
 
 export const Gif = styled.img`
   border-radius: 0.75rem;
-  max-width: 100%;
+  width: 100%;
   height: auto;
 `;

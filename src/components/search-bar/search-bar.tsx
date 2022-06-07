@@ -1,16 +1,8 @@
-import { useEffect, useState } from "react";
-import { useAppDispatch } from "../../app/hooks";
-import { getGifs, getTrendingGifs } from "../../features/gif/gifSlice";
 import { Search } from "./search-bar.styles";
+import { useSearchBar } from "./use-search-bar";
 
 const SearchBar = () => {
-  const [query, setQuery] = useState("");
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    query === "" ? dispatch(getTrendingGifs()) : dispatch(getGifs(query));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query]);
+  const { setQuery } = useSearchBar();
   return (
     <Search
       type="text"
