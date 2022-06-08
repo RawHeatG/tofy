@@ -18,8 +18,8 @@ const GifCard = ({ gif }: GifCardProps) => {
 };
 
 const GifCardRef = React.forwardRef(({ gif }: GifCardProps, ref: any) => {
-  const stillUrl = gif.images.fixed_width_still.url;
-  const url = gif.images.fixed_width.url;
+  const stillUrl = gif.images.downsized_still.url;
+  const url = gif.images.downsized.url;
   const [isPlay, setIsPlay] = useState<boolean>(false);
   const togglePlay = () => setIsPlay(!isPlay);
   return (
