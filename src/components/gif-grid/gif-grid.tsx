@@ -1,4 +1,5 @@
-import { Gif, StyledGrid } from "./gif-grid.styles";
+import { GifCard, GifCardRef } from "../gif-card/gif-card";
+import { StyledGrid } from "./gif-grid.styles";
 import { GifGridProps } from "./gif-grid.types";
 import { useGifGrid } from "./use-gif-grid";
 
@@ -8,14 +9,9 @@ const GifGrid = ({ gifsResult: { data: gifs } }: GifGridProps) => {
     <StyledGrid>
       {gifs.map((gif, index) =>
         index === gifs.length - 1 ? (
-          <Gif
-            key={gif.id}
-            src={gif.images.downsized.url}
-            alt={gif.title}
-            ref={lastGifRef}
-          />
+          <GifCardRef gif={gif} ref={lastGifRef} />
         ) : (
-          <Gif key={gif.id} src={gif.images.downsized.url} alt={gif.title} />
+          <GifCard gif={gif} />
         )
       )}
     </StyledGrid>
