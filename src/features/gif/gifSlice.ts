@@ -1,4 +1,4 @@
-import { GifSLiceInitialState, Status, TGetGifs } from "./gifSlice.types";
+import { GifSLiceInitialState, Status } from "./gifSlice.types";
 import { fetchTrendingGifs, searchGifs } from "../../services/gifServices";
 import { createAsyncThunk, createSlice, isAnyOf } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";

@@ -15,8 +15,3 @@ export type GifSLiceInitialState = {
   query: string;
   hasMoreGifs: boolean;
 };
-
-export type TGetGifs = {
-  query: string;
-  offset?: number;
-};
