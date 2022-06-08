@@ -5,33 +5,34 @@ import { useAppDispatch, useAppSelector } from "./app/hooks";
 import { toggleTheme } from "./features/theme/themeSlice";
 import { useEffect } from "react";
 import { GifGrid } from "./components/gif-grid/gif-grid";
-import { getTrendingGifs } from "./features/gif/gifSlice";
+import { getGifs } from "./features/gif/gifSlice";
 import { SearchBar } from "./components/search-bar/search-bar";
+import { GlobalStyles } from "./components/global-styles/globalStyles.styles";
 
 function App() {
   const theme = useAppSelector((state) => state.theme.value);
-  const { status, gifs } = useAppSelector((state) => state.gif);
+  const { status, gifsResult } = useAppSelector((state) => state.gif);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     (async () => {
-      dispatch(getTrendingGifs());
+      dispatch(getGifs(0));
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
   return (
     <ThemeProvider theme={themes[theme]}>
+      <GlobalStyles />
       <StyledApp>
         <SearchBar />
         <ThemeToggleButton onClick={() => dispatch(toggleTheme())}>
           {theme}
         </ThemeToggleButton>
-        {status === "fulfilled" ? (
-          gifs?.length === 0 ? (
+        {status === "fulfilled" && gifsResult ? (
+          gifsResult.data?.length === 0 ? (
             <h1>No videos found :(</h1>
           ) : (
-            <GifGrid gifs={gifs} />
+            <GifGrid gifsResult={gifsResult} />
           )
         ) : status === "loading" ? (
           <h1>Loading...</h1>

@@ -1,57 +1,87 @@
+import { GifSLiceInitialState, Status, TGetGifs } from "./gifSlice.types";
 import { fetchTrendingGifs, searchGifs } from "../../services/gifServices";
 import { createAsyncThunk, createSlice, isAnyOf } from "@reduxjs/toolkit";
+import { RootState } from "../../app/store";
 
-const initialState: any = {
-  status: "idle",
-  gifs: [],
-  error: null
+const initialState: GifSLiceInitialState = {
+  status: Status.idle,
+  gifsResult: null,
+  error: null,
+  prevOffset: 10,
+  query: "",
+  hasMoreGifs: true
 };
 
-export const getTrendingGifs = createAsyncThunk(
-  "trending/getTrendingGifs",
-  async () => {
-    const response = await fetchTrendingGifs();
-    console.log("trending response", response);
-    return response.data;
+export const getGifs = createAsyncThunk(
+  "gifs/getGifs",
+  async (offset: number, thunkAPI) => {
+    const {
+      gif: { query }
+    } = thunkAPI.getState() as RootState;
+    return (await query) === ""
+      ? fetchTrendingGifs(offset)
+      : searchGifs(query, offset);
   }
 );
 
-export const getGifs = createAsyncThunk(
-  "trending/getGifs",
-  async (query: string) => {
-    const response = await searchGifs(query);
-    console.log(response);
-    return response.data;
+export const getMoreGifs = createAsyncThunk(
+  "gifs/getMoreGifs",
+  async (_, thunkAPI) => {
+    const {
+      gif: { query, prevOffset }
+    } = thunkAPI.getState() as RootState;
+    return (await query) === ""
+      ? fetchTrendingGifs(prevOffset)
+      : searchGifs(query, prevOffset);
   }
 );
 
 export const gifSlice = createSlice({
-  name: "trending",
+  name: "gif",
   initialState,
-  reducers: {},
+  reducers: {
+    setQuery: (state, action) => {
+      state.query = action.payload;
+    },
+    resetOffset: (state) => {
+      state.prevOffset = 10;
+    }
+  },
   extraReducers: (builder) => {
     builder
+      .addCase(getMoreGifs.fulfilled, (state, action) => {
+        state.gifsResult =
+          state.gifsResult !== null
+            ? {
+                ...action.payload,
+                data: [...state?.gifsResult?.data, ...action.payload.data]
+              }
+            : action.payload;
+        state.prevOffset = action.payload.pagination.offset + 10;
+        state.status = Status.fulfilled;
+        state.hasMoreGifs =
+          action.payload.pagination.total_count > state.prevOffset;
+      })
+      .addCase(getGifs.pending, (state) => {
+        state.status = Status.loading;
+      })
+      .addCase(getGifs.fulfilled, (state, action) => {
+        state.gifsResult = action.payload;
+        state.status = Status.fulfilled;
+        state.hasMoreGifs =
+          action.payload.pagination.total_count > state.prevOffset;
+        state.prevOffset = action.payload.pagination.offset + 10;
+      })
       .addMatcher(
-        isAnyOf(getTrendingGifs.pending, getGifs.pending),
-        (state) => {
-          state.status = "loading";
-        }
-      )
-      .addMatcher(
-        isAnyOf(getTrendingGifs.fulfilled, getGifs.fulfilled),
-        (state, action) => {
-          state.gifs = action.payload;
-          state.status = "fulfilled";
-        }
-      )
-      .addMatcher(
-        isAnyOf(getTrendingGifs.rejected, getGifs.rejected),
+        isAnyOf(getGifs.rejected, getMoreGifs.rejected),
         (state, action) => {
           state.error = action.payload;
-          state.status = "error";
+          state.status = Status.error;
         }
       );
   }
 });
+
+export const { resetOffset, setQuery } = gifSlice.actions;
 
 export default gifSlice.reducer;
