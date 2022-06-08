@@ -5,6 +5,7 @@ import { RootState } from "../../app/store";
 
 const initialState: GifSLiceInitialState = {
   status: Status.idle,
+  additionalGifsStatus: Status.idle,
   gifsResult: null,
   error: null,
   prevOffset: 10,
@@ -61,6 +62,9 @@ export const gifSlice = createSlice({
         state.status = Status.fulfilled;
         state.hasMoreGifs =
           action.payload.pagination.total_count > state.prevOffset;
+      })
+      .addCase(getMoreGifs.pending, (state) => {
+        state.additionalGifsStatus = Status.loading;
       })
       .addCase(getGifs.pending, (state) => {
         state.status = Status.loading;

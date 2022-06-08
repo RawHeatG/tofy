@@ -6,7 +6,7 @@ const SearchBar = () => {
   return (
     <Search
       type="text"
-      placeholder="Search Gifs..."
+      placeholder="Search Gifs...🔍"
       value={query}
       onChange={(event) => updateQuery(event.target.value)}
     />

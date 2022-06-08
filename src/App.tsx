@@ -8,10 +8,13 @@ import { GifGrid } from "./components/gif-grid/gif-grid";
 import { getGifs } from "./features/gif/gifSlice";
 import { SearchBar } from "./components/search-bar/search-bar";
 import { GlobalStyles } from "./components/global-styles/globalStyles.styles";
+import { Status } from "./features/gif/gifSlice.types";
 
 function App() {
   const theme = useAppSelector((state) => state.theme.value);
-  const { status, gifsResult } = useAppSelector((state) => state.gif);
+  const { status, gifsResult, additionalGifsStatus } = useAppSelector(
+    (state) => state.gif
+  );
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -28,16 +31,20 @@ function App() {
         <ThemeToggleButton onClick={() => dispatch(toggleTheme())}>
           {theme}
         </ThemeToggleButton>
-        {status === "fulfilled" && gifsResult ? (
+        {status === Status.fulfilled && gifsResult ? (
           gifsResult.data?.length === 0 ? (
+            //putting these headers as a cheap loader :')
             <h1>No videos found :(</h1>
           ) : (
             <GifGrid gifsResult={gifsResult} />
           )
-        ) : status === "loading" ? (
+        ) : status === Status.loading ? (
           <h1>Loading...</h1>
         ) : (
           <h1>Error Occured :(</h1>
+        )}
+        {additionalGifsStatus === Status.loading && (
+          <h1>Loading more gifs...</h1>
         )}
       </StyledApp>
     </ThemeProvider>

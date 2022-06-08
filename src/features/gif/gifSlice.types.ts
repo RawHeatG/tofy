@@ -9,6 +9,7 @@ export enum Status {
 
 export type GifSLiceInitialState = {
   status: Status;
+  additionalGifsStatus: Status;
   gifsResult: GifsResult | null;
   error: any;
   prevOffset: number;
