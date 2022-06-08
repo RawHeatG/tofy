@@ -1,5 +1,5 @@
-import { IGif } from "@giphy/js-types";
+import { GifsResult } from "@giphy/js-fetch-api";
 
 export type GifGridProps = {
-  gifs: IGif[];
+  gifsResult: GifsResult;
 };

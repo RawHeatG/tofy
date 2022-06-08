@@ -1,18 +1,31 @@
-import { getTrendingGifs, getGifs } from "./../../features/gif/gifSlice";
-import { useAppDispatch } from "./../../app/hooks";
-import { useState } from "react";
+import { getGifs, resetOffset, setQuery } from "./../../features/gif/gifSlice";
+import { useAppDispatch, useAppSelector } from "./../../app/hooks";
+import { useCallback } from "react";
 import { useEffect } from "react";
+import { getDebouncedFunc } from "../../utils/utils";
 const useSearchBar = () => {
-  const [query, setQuery] = useState("");
+  const { query } = useAppSelector((state) => state.gif);
   const dispatch = useAppDispatch();
+
+  const updateQuery = (query: string) => {
+    dispatch(setQuery(query));
+    dispatch(resetOffset());
+  };
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const debouncedGetGifs = useCallback(
+    getDebouncedFunc(() => dispatch(getGifs(0)), 500),
+    []
+  );
+
   useEffect(() => {
-    query === "" ? dispatch(getTrendingGifs()) : dispatch(getGifs(query));
+    debouncedGetGifs(query);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query]);
 
   return {
     query,
-    setQuery
+    updateQuery
   };
 };
 

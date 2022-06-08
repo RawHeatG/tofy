@@ -1,3 +1,13 @@
+import "styled-components";
+declare module "styled-components" {
+  interface DefaultTheme {
+    background: string;
+    color: string;
+    invertedBackground: string;
+    invertedColor: string;
+  }
+}
+
 const lightTheme = {
   background: "#fdfcdc",
   color: "#041C32",

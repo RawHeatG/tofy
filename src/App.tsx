@@ -1,33 +1,17 @@
 import { ThemeProvider } from "styled-components";
 import { themes } from "./styles/theme";
-import { StyledApp, ThemeToggleButton } from "./App.styles";
-import { useAppDispatch, useAppSelector } from "./app/hooks";
-import { toggleTheme } from "./features/theme/themeSlice";
-import { useEffect } from "react";
-import { GifGrid } from "./components/gif-grid/gif-grid";
-import { getTrendingGifs } from "./features/gif/gifSlice";
-import { SearchBar } from "./components/search-bar/search-bar";
+import { StyledApp } from "./App.styles";
+import { useAppSelector } from "./app/hooks";
+import { GlobalStyles } from "./components/global-styles/globalStyles.styles";
+import { Tofy } from "./components";
 
 function App() {
   const theme = useAppSelector((state) => state.theme.value);
-  const { status, gifs } = useAppSelector((state) => state.gif);
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    (async () => {
-      dispatch(getTrendingGifs());
-    })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   return (
     <ThemeProvider theme={themes[theme]}>
+      <GlobalStyles />
       <StyledApp>
-        <SearchBar />
-        <ThemeToggleButton onClick={() => dispatch(toggleTheme())}>
-          {theme}
-        </ThemeToggleButton>
-        {status === "fulfilled" ? <GifGrid gifs={gifs} /> : <h1>Loading...</h1>}
+        <Tofy />
       </StyledApp>
     </ThemeProvider>
   );

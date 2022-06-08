@@ -7,4 +7,7 @@ export const Search = styled.input`
   color: ${(props) => props.theme.invertedColor};
   border-radius: 4px;
   font-size: large;
+  &::placeholder {
+    color: ${(props) => props.theme.invertedColor};
+  }
 `;
