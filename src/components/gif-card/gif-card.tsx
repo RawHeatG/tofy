@@ -13,6 +13,7 @@ const GifCard = ({ gif }: GifCardProps) => {
       src={isPlay ? url : stillUrl}
       alt={gif.title}
       onClick={togglePlay}
+      loading="lazy"
     />
   );
 };
@@ -29,6 +30,7 @@ const GifCardRef = React.forwardRef(({ gif }: GifCardProps, ref: any) => {
       alt={gif.title}
       onClick={togglePlay}
       ref={ref}
+      loading="lazy"
     />
   );
 });
