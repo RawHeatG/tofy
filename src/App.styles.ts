@@ -1,10 +1,6 @@
 import styled from "styled-components";
 
-export const StyledApp = styled.div`
-  background-color: ${(props) => props.theme.background};
-  color: ${(props) => props.theme.color};
-  transition: all 0.3s ease;
-`;
+export const StyledApp = styled.div``;
 
 export const ThemeToggleButton = styled.button`
   position: fixed;
@@ -16,6 +12,6 @@ export const ThemeToggleButton = styled.button`
   font-size: large;
   padding: 0.5rem 1rem;
   cursor: pointer;
-  background-color: ${(props) => props.theme.invertedBackground};
-  color: ${(props) => props.theme.invertedColor};
+  background-color: ${({ theme }) => theme.invertedBackground};
+  color: ${({ theme }) => theme.invertedColor};
 `;
