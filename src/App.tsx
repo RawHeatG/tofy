@@ -1,11 +1,19 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { ThemeProvider } from "styled-components";
+import { themes } from "./styles/theme";
+import { StyledApp } from "./App.styles";
+import { useAppSelector } from "./app/hooks";
+import { GlobalStyles } from "./components/global-styles/globalStyles.styles";
+import { Tofy } from "./components";
 
 function App() {
+  const theme = useAppSelector((state) => state.theme.value);
   return (
-    <div className="App">
-    </div>
+    <ThemeProvider theme={themes[theme]}>
+      <GlobalStyles />
+      <StyledApp>
+        <Tofy />
+      </StyledApp>
+    </ThemeProvider>
   );
 }
 
