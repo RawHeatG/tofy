@@ -2,12 +2,14 @@ import { useAppSelector } from "./../../app/hooks";
 import { getMoreGifs } from "./../../features/gif/gifSlice";
 import { useCallback, useRef } from "react";
 import { useAppDispatch } from "../../app/hooks";
+import { useMediaQuery } from "../../hooks/use-media-query";
 
 const useGifGrid = () => {
   const { prevOffset, hasMoreGifs, column } = useAppSelector(
     (state) => state.gif
   );
   const dispatch = useAppDispatch();
+  useMediaQuery();
 
   const observer = useRef<IntersectionObserver>();
   observer.current && observer?.current?.disconnect();

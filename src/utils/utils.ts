@@ -16,3 +16,12 @@ export const segregateGifs = (gifs: IGif[], column: number): IGif[][] => {
     return acc;
   }, Array(column).fill([]));
 };
+
+export const getColumn = () =>
+  window.matchMedia("(max-width: 480px)").matches
+    ? 1
+    : window.matchMedia("(max-width: 600px)").matches
+    ? 2
+    : window.matchMedia("(max-width: 900px)").matches
+    ? 3
+    : 4;

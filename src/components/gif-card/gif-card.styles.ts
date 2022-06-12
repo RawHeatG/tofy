@@ -5,4 +5,5 @@ export const Gif = styled.img`
   width: 100%;
   height: auto;
   cursor: pointer;
+  margin-bottom: 6px;
 `;

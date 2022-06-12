@@ -2,6 +2,7 @@ import { GifSLiceInitialState, Status } from "./gifSlice.types";
 import { fetchTrendingGifs, searchGifs } from "../../services/gifServices";
 import { createAsyncThunk, createSlice, isAnyOf } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
+import { getColumn } from "../../utils/utils";
 
 const initialState: GifSLiceInitialState = {
   status: Status.idle,
@@ -11,7 +12,7 @@ const initialState: GifSLiceInitialState = {
   prevOffset: 10,
   query: "",
   hasMoreGifs: true,
-  column: 4
+  column: getColumn()
 };
 
 export const getGifs = createAsyncThunk(
@@ -47,6 +48,9 @@ export const gifSlice = createSlice({
     },
     resetOffset: (state) => {
       state.prevOffset = 10;
+    },
+    setColumn: (state, action) => {
+      state.column = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -87,6 +91,6 @@ export const gifSlice = createSlice({
   }
 });
 
-export const { resetOffset, setQuery } = gifSlice.actions;
+export const { resetOffset, setQuery, setColumn } = gifSlice.actions;
 
 export default gifSlice.reducer;
