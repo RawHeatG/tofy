@@ -4,7 +4,9 @@ import { useCallback, useRef } from "react";
 import { useAppDispatch } from "../../app/hooks";
 
 const useGifGrid = () => {
-  const { prevOffset, hasMoreGifs } = useAppSelector((state) => state.gif);
+  const { prevOffset, hasMoreGifs, column } = useAppSelector(
+    (state) => state.gif
+  );
   const dispatch = useAppDispatch();
 
   const observer = useRef<IntersectionObserver>();
@@ -28,7 +30,8 @@ const useGifGrid = () => {
   );
 
   return {
-    lastGifRef
+    lastGifRef,
+    column
   };
 };
 

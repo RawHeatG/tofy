@@ -10,7 +10,8 @@ const initialState: GifSLiceInitialState = {
   error: null,
   prevOffset: 10,
   query: "",
-  hasMoreGifs: true
+  hasMoreGifs: true,
+  column: 4
 };
 
 export const getGifs = createAsyncThunk(

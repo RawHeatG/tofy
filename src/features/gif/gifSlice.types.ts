@@ -15,4 +15,5 @@ export type GifSLiceInitialState = {
   prevOffset: number;
   query: string;
   hasMoreGifs: boolean;
+  column: number;
 };
